@@ -12,23 +12,32 @@ def encode(string, shift_no):
     list = []
     for letter in string:
         list.append(chr(ord(letter) + shift_no))
-    return string(list)
+    return list
 
 
 def on_button_click():
     play_sound()
-    to_encode = encoded_text.get()
+    encoded = encode(encoded_text.get(), shift_amount.get())
+    output_text.config(state=tk.NORMAL)
+    output_text.delete(1.0, tk.end)
+    output_text.insert(tk.END, encoded)
+    output_text.config(state=tk.DISABLED)
 
 
 root = tk.Tk()
 root.title("Caesar Cypher App")
 root.geometry("400x600")
 
-encoded_text = tk.Entry(root, text="text to encode", height=5, width=30)
-shift_amount = tk.Entry(root, text="Amount to shift given text by", height=4, width=4)
+encoded_text = tk.Entry(root, text="text to encode")
+shift_amount = tk.Entry(root, text="Amount to shift given text by")
 encode_btn = tk.Button(root, text="encode", command=on_button_click)
 
-output = tk.Text(root, height=5, width=30)
+output_text = tk.Text(root, height=5, width=30)
 
+
+encoded_text.grid(row=0, column=0, padx=10, pady=5)
+shift_amount.grid(row=1, column=0, padx=10, pady=5)
+encode_btn.grid(row=2, column=0, padx=10, pady=5)
+output_text.grid(row=4, column=0, padx=10, pady=10)
 
 root.mainloop()
